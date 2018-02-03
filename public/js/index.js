@@ -48,14 +48,21 @@ var locationButton = document.querySelector('#send-location');
 locationButton.addEventListener('click', () => {
   if (!navigator.geolocation) return alert('Geolocation not supported by your browser');
 
+  locationButton.setAttribute('disabled', 'disabled');
+  locationButton.textContent = 'sending..........';
+
   navigator.geolocation.getCurrentPosition(
     function(position) {
+      locationButton.removeAttribute('disabled');
+      locationButton.textContent = 'Send Location';
       socket.emit('createLocationMessage', {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       });
     },
     function() {
+      locationButton.removeAttribute('disabled');
+      locationButton.textContent = 'Send Location';
       alert('Unable to fetch location');
     }
   );
