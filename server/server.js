@@ -10,9 +10,20 @@ var io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection', socket => {
-  console.log('New user connected');
+  console.log('connected');
+
+  socket.emit('newEmail', {
+    from: 'todd@toddServer.com',
+    text: 'hey whats going on',
+    createdAt: 123,
+  });
+
+  socket.on('createMessage', newMessage => {
+    console.log(newMessage);
+  });
+
   socket.on('disconnect', () => {
-    console.log('Boo hoo the connection was dropped');
+    console.log('disconnected');
   });
 });
 
