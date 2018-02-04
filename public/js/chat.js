@@ -70,15 +70,9 @@ socket.on('newLocationMessage', function(message) {
 document.getElementById('message-form').addEventListener('submit', e => {
   e.preventDefault();
   const input = document.querySelector('.input');
-  socket.emit(
-    'createMessage',
-    {
-      from: 'User',
-      text: input.value,
-    },
-    function() {}
-  );
-  input.value = '';
+  socket.emit('createMessage', { text: input.value }, function() {
+    input.value = '';
+  });
 });
 
 var locationButton = document.querySelector('#send-location');
